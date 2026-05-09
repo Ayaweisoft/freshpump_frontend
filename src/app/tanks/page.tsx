@@ -16,7 +16,7 @@ const tankMetrics = [
 export default function TanksPage() {
   return (
     <div className="grid gap-6">
-      <section className="panel-hero rounded-[34px] p-6 sm:p-8">
+      <section className="panel-hero rounded-(--radius-hero) p-6 sm:p-8">
         <div className="grid gap-6 xl:grid-cols-[minmax(0,1.2fr)_340px]">
           <div>
             <div className="flex flex-wrap items-center gap-3">
@@ -31,7 +31,7 @@ export default function TanksPage() {
             </p>
           </div>
 
-          <div className="panel-card rounded-[30px] p-5">
+          <div className="panel-card rounded-4xl p-5">
             <p className="text-sm text-text-secondary">Forecast signals</p>
             <div className="mt-5 space-y-4">
               {[
@@ -65,7 +65,7 @@ export default function TanksPage() {
         <SectionCard eyebrow="Tank capacity" title="Tank level gauges" badge="2 warning states" badgeTone="warning">
           <div className="mt-8 grid gap-5 md:grid-cols-2">
             {tanks.map((tank) => (
-              <div key={tank.name} className="panel-card rounded-[28px] p-5">
+              <div key={tank.name} className="panel-card rounded-4xl p-5">
                 <div className="flex items-center justify-between gap-4">
                   <div>
                     <p className="text-sm font-semibold text-foreground">{tank.name}</p>

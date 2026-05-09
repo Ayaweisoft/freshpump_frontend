@@ -58,7 +58,7 @@ export function MetricCardWithIcon({
   const colors = toneColors[tone];
 
   return (
-    <article className="panel-card group flex items-start gap-4 rounded-[26px] p-4.5 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-md">
+    <article className="panel-card dashboard-card metric-card group flex items-start gap-4 rounded-3xl p-4.5 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-md">
       <div
         className={`surface-icon ${colors.bg} ${colors.icon} flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl p-3 transition-transform duration-300 group-hover:scale-105`}
       >

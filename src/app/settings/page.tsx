@@ -163,7 +163,7 @@ export default function SettingsPage() {
             </label>
           </div>
 
-          <div className="panel-muted rounded-[28px] p-5">
+          <div className="panel-muted rounded-4xl p-5">
             <div className="flex items-center gap-3">
               <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-primary/10 text-primary">
                 <Building2 className="h-5 w-5" />

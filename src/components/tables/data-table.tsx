@@ -20,7 +20,7 @@ function gridTemplateForColumns(columns: number) {
 
 export function DataTable({ headers, rows, columns }: DataTableProps) {
   return (
-    <div className="table-shell mt-6 overflow-hidden rounded-3xl">
+    <div className="table-shell data-table mt-6 overflow-hidden rounded-3xl">
       <div className="md:hidden">
         {rows.map((row) => (
           <div key={row.key} className="data-grid-row space-y-3 px-4 py-4 text-sm text-text-secondary">

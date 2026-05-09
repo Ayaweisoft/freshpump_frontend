@@ -29,7 +29,7 @@ export function BranchSummaryCard({
       <button
         type="button"
         onClick={onSwitchBranch}
-        className="panel-muted mt-4 flex w-full items-center justify-between rounded-[18px] border border-border-subtle/60 px-4 py-3 text-left text-sm text-text-secondary transition hover:text-foreground"
+        className="panel-muted mt-4 flex w-full items-center justify-between rounded-2xl border border-border-subtle/60 px-4 py-3 text-left text-sm text-text-secondary transition hover:text-foreground"
       >
         <span className="font-medium text-foreground">Switch branch</span>
         <span className="font-mono text-xs uppercase tracking-[0.14em] text-primary">{onlineCountLabel}</span>

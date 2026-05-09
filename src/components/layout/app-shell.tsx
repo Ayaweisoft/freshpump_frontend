@@ -170,7 +170,7 @@ export function AppShell({
   const renderNavigationItem = (item: NavigationItem, keyPrefix?: string) => {
     const Icon = item.icon;
     const isActive = item.href ? currentPath === item.href : false;
-    const className = `flex items-center justify-between rounded-[18px] border py-2.5 text-sm font-medium transition ${
+    const className = `flex items-center justify-between rounded-2xl border py-2.5 text-sm font-medium transition ${
       isActive
         ? "border-success/20 bg-success/12 text-success shadow-(--shadow-glow-success)"
         : item.href
@@ -252,7 +252,7 @@ export function AppShell({
       {isMobileNavOpen ? (
         <div className="fixed inset-0 z-50 bg-slate-950/55 backdrop-blur-sm lg:hidden" onClick={closeMobileNav}>
           <div className="relative h-full max-w-80 overflow-y-auto p-4" onClick={(event) => event.stopPropagation()}>
-            <aside className="panel-shell flex min-h-full flex-col rounded-[26px] px-4 py-5 shadow-(--shadow-lg)">
+            <aside className="panel-shell sidebar-shell flex min-h-full flex-col rounded-3xl px-4 py-5 shadow-(--shadow-lg)">
               <div className="flex items-center justify-between border-b border-border-subtle/70 pb-4">
                 <AppLogo size="sm" showSubtitle subtitle="Smart station control" className="scale-[0.96] origin-left" />
                 <button
@@ -271,7 +271,7 @@ export function AppShell({
                   closeMobileNav();
                   setIsBranchModalOpen(true);
                 }}
-                className="panel-muted mt-5 flex items-center gap-3 rounded-[18px] border border-border-subtle/60 px-3.5 py-3 text-left text-sm text-text-secondary transition hover:text-foreground"
+                className="panel-muted mt-5 flex items-center gap-3 rounded-2xl border border-border-subtle/60 px-3.5 py-3 text-left text-sm text-text-secondary transition hover:text-foreground"
               >
                 <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-2xl bg-primary/10 text-primary">
                   <Building2 className="h-4 w-4" />
@@ -288,7 +288,7 @@ export function AppShell({
               </button>
 
               <div className="mt-4 grid grid-cols-2 gap-2">
-                <label className="panel-muted flex min-w-0 items-center gap-2 rounded-[18px] px-3 py-2.5 text-sm text-text-secondary">
+                <label className="panel-muted flex min-w-0 items-center gap-2 rounded-2xl px-3 py-2.5 text-sm text-text-secondary">
                   <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-2xl bg-primary/10 text-primary">
                     <Languages className="h-4 w-4" />
                   </div>
@@ -305,7 +305,7 @@ export function AppShell({
                     ))}
                   </select>
                 </label>
-                <label className="panel-muted flex min-w-0 items-center gap-2 rounded-[18px] px-3 py-2.5 text-sm text-text-secondary">
+                <label className="panel-muted flex min-w-0 items-center gap-2 rounded-2xl px-3 py-2.5 text-sm text-text-secondary">
                   <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-2xl bg-primary/10 font-mono text-[0.68rem] font-semibold text-primary">
                     FX
                   </div>
@@ -325,7 +325,7 @@ export function AppShell({
                 <button
                   type="button"
                   onClick={handleThemeCycle}
-                  className="panel-muted flex items-center gap-2 rounded-[18px] px-3 py-2.5 text-sm text-text-secondary"
+                  className="panel-muted flex items-center gap-2 rounded-2xl px-3 py-2.5 text-sm text-text-secondary"
                 >
                   <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-2xl bg-primary/10 text-primary">
                     <MoonStar className="h-4 w-4" />
@@ -335,7 +335,7 @@ export function AppShell({
                 <button
                   type="button"
                   onClick={() => setIsNotificationsOpen(true)}
-                  className="panel-muted relative flex items-center gap-2 rounded-[18px] px-3 py-2.5 text-sm text-text-secondary"
+                  className="panel-muted relative flex items-center gap-2 rounded-2xl px-3 py-2.5 text-sm text-text-secondary"
                 >
                   <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-2xl bg-primary/10 text-primary">
                     <Bell className="h-4 w-4" />
@@ -358,7 +358,7 @@ export function AppShell({
       ) : null}
 
       <div className={`mx-auto grid min-h-screen w-full max-w-450 gap-5 px-4 py-4 lg:px-5 lg:py-5 ${isCompactNavigation ? "lg:grid-cols-[220px_minmax(0,1fr)]" : "lg:grid-cols-[248px_minmax(0,1fr)]"}`}>
-        <aside className="panel-shell hidden rounded-[26px] px-4 py-5 lg:flex lg:flex-col">
+        <aside className="panel-shell sidebar-shell hidden rounded-3xl px-4 py-5 lg:flex lg:flex-col">
           <div className="flex items-center justify-between border-b border-border-subtle/70 pb-4">
             <AppLogo size="sm" showSubtitle subtitle="Smart station control" className="scale-[0.96] origin-left" />
             {settings.liveStatusEnabled ? (
@@ -376,7 +376,7 @@ export function AppShell({
         </aside>
 
         <div className="flex min-w-0 flex-col gap-6">
-          <header className="panel-shell rounded-[26px] px-4 py-3.5 lg:px-5">
+          <header className="panel-shell navbar-shell rounded-3xl px-4 py-3.5 lg:px-5">
             <div className="flex flex-col gap-3 xl:flex-row xl:items-center xl:justify-between">
               <div className="min-w-0">
                 <div className="flex items-center gap-3 text-[0.68rem] uppercase tracking-[0.18em] text-text-muted">
@@ -410,7 +410,7 @@ export function AppShell({
                   <button
                     type="button"
                     onClick={() => setIsBranchModalOpen(true)}
-                    className="panel-muted col-span-2 flex min-w-0 items-center gap-3 rounded-[18px] px-3.5 py-2.5 text-sm text-text-secondary transition hover:text-foreground sm:col-span-1 sm:px-4 xl:min-w-48"
+                    className="panel-muted col-span-2 flex min-w-0 items-center gap-3 rounded-2xl px-3.5 py-2.5 text-sm text-text-secondary transition hover:text-foreground sm:col-span-1 sm:px-4 xl:min-w-48"
                   >
                     <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-2xl bg-primary/10 text-primary">
                       <Building2 className="h-4 w-4" />
@@ -420,7 +420,7 @@ export function AppShell({
                     </div>
                     <ChevronDown className="h-4 w-4 shrink-0 text-text-muted" />
                   </button>
-                  <label className="panel-muted flex min-w-0 items-center gap-2 rounded-[18px] px-3 py-2.5 text-sm text-text-secondary transition hover:text-foreground sm:px-3.5 xl:min-w-26">
+                  <label className="panel-muted flex min-w-0 items-center gap-2 rounded-2xl px-3 py-2.5 text-sm text-text-secondary transition hover:text-foreground sm:px-3.5 xl:min-w-26">
                     <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-2xl bg-primary/10 text-primary">
                       <Languages className="h-4 w-4" />
                     </div>
@@ -437,7 +437,7 @@ export function AppShell({
                       ))}
                     </select>
                   </label>
-                  <label className="panel-muted flex min-w-0 items-center gap-2 rounded-[18px] px-3 py-2.5 text-sm text-text-secondary transition hover:text-foreground sm:px-3.5 xl:min-w-24">
+                  <label className="panel-muted flex min-w-0 items-center gap-2 rounded-2xl px-3 py-2.5 text-sm text-text-secondary transition hover:text-foreground sm:px-3.5 xl:min-w-24">
                     <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-2xl bg-primary/10 font-mono text-xs font-semibold text-primary">
                       FX
                     </div>
@@ -459,7 +459,7 @@ export function AppShell({
                     aria-label={`Switch theme, current theme ${themeLabels[theme]}`}
                     title={`Theme: ${themeLabels[theme]}`}
                     onClick={handleThemeCycle}
-                    className="panel-muted flex min-w-0 items-center gap-2 rounded-[18px] px-3 py-2.5 text-sm text-text-secondary transition hover:text-foreground sm:px-3.5 xl:min-w-24"
+                    className="panel-muted flex min-w-0 items-center gap-2 rounded-2xl px-3 py-2.5 text-sm text-text-secondary transition hover:text-foreground sm:px-3.5 xl:min-w-24"
                   >
                     <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-2xl bg-primary/10 text-primary">
                       <MoonStar className="h-4 w-4" />
@@ -469,7 +469,7 @@ export function AppShell({
                   <button
                     type="button"
                     onClick={() => setIsNotificationsOpen(true)}
-                    className="panel-muted relative flex h-14 items-center justify-center rounded-[18px] px-3.5 text-text-secondary transition hover:text-success"
+                    className="panel-muted relative flex h-14 items-center justify-center rounded-2xl px-3.5 text-text-secondary transition hover:text-success"
                     aria-label={settings.notificationsEnabled ? "Notifications enabled" : "Notifications disabled"}
                   >
                     <Bell className="h-4 w-4" />
@@ -479,7 +479,7 @@ export function AppShell({
                   </button>
                   <button
                     type="button"
-                    className="panel-muted col-span-2 flex min-w-0 items-center gap-3 rounded-[18px] px-3.5 py-2.5 sm:col-span-1 sm:px-4 xl:min-w-40"
+                    className="panel-muted col-span-2 flex min-w-0 items-center gap-3 rounded-2xl px-3.5 py-2.5 sm:col-span-1 sm:px-4 xl:min-w-40"
                   >
                     <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-primary/14 text-sm font-semibold text-primary">
                       {organization.userInitials}
@@ -495,7 +495,7 @@ export function AppShell({
                   <button
                     type="button"
                     onClick={() => setIsBranchModalOpen(true)}
-                    className="panel-muted flex min-w-0 flex-1 items-center gap-2 rounded-[18px] px-3 py-2.5 text-sm text-text-secondary"
+                    className="panel-muted flex min-w-0 flex-1 items-center gap-2 rounded-2xl px-3 py-2.5 text-sm text-text-secondary"
                   >
                     <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-2xl bg-primary/10 text-primary">
                       <Building2 className="h-4 w-4" />
@@ -506,7 +506,7 @@ export function AppShell({
                   <button
                     type="button"
                     onClick={() => setIsNotificationsOpen(true)}
-                    className="panel-muted relative flex h-12 w-12 shrink-0 items-center justify-center rounded-[18px] text-text-secondary"
+                    className="panel-muted relative flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl text-text-secondary"
                     aria-label={settings.notificationsEnabled ? "Notifications enabled" : "Notifications disabled"}
                   >
                     <Bell className="h-4 w-4" />

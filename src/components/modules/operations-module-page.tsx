@@ -100,7 +100,7 @@ export function OperationsModulePage({ config }: { config: OperationsModuleConfi
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.45, ease: "easeOut" }}
     >
-      <section className="panel-hero rounded-[34px] p-6 sm:p-8">
+      <section className="panel-hero rounded-(--radius-hero) p-6 sm:p-8">
         <div className="grid gap-6 xl:grid-cols-[minmax(0,1.2fr)_340px]">
           <div>
             <div className="flex flex-wrap items-center gap-3">
@@ -124,7 +124,7 @@ export function OperationsModulePage({ config }: { config: OperationsModuleConfi
             </div>
           </div>
 
-          <div className="panel-card rounded-[30px] p-5">
+          <div className="panel-card rounded-4xl p-5">
             <p className="text-sm text-text-secondary">{config.hero.asideTitle}</p>
             <div className="mt-5 space-y-4">
               {config.hero.asideItems.map((item) => (

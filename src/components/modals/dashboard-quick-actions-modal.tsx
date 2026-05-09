@@ -46,7 +46,7 @@ export function DashboardQuickActionsModal({
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-[rgba(2,6,23,0.58)] px-4 backdrop-blur-md">
-      <div className="panel-shell w-full max-w-3xl rounded-[28px] p-6 shadow-[0_24px_90px_rgba(2,6,23,0.3)] sm:p-7">
+      <div className="panel-shell w-full max-w-3xl rounded-4xl p-6 shadow-[0_24px_90px_rgba(2,6,23,0.3)] sm:p-7">
         <div className="flex items-start justify-between gap-4">
           <div>
             <p className="text-[0.72rem] uppercase tracking-[0.2em] text-primary">Quick actions</p>

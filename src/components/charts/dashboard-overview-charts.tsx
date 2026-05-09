@@ -50,7 +50,7 @@ function ChartTooltip({ active, payload, label }: TooltipProps) {
   }
 
   return (
-    <div className="chart-tooltip-surface rounded-[18px] px-4 py-3">
+    <div className="chart-tooltip-surface rounded-2xl px-4 py-3">
       <p className="text-[0.68rem] uppercase tracking-[0.18em] text-text-muted">{label}</p>
       <div className="mt-3 space-y-2">
         {payload.map((item) => (
@@ -82,7 +82,7 @@ export function DailySalesChart() {
   const isReady = useChartReady();
 
   return (
-    <div className="panel-muted mt-6 h-72 min-w-0 overflow-hidden rounded-[22px] p-4 sm:h-80 sm:p-5">
+    <div className="panel-muted mt-6 h-72 min-w-0 overflow-hidden rounded-(--radius-chart) p-4 sm:h-80 sm:p-5">
       {isReady ? (
         <ResponsiveContainer width="100%" height="100%" minWidth={0} minHeight={240}>
           <AreaChart data={dailySalesData} margin={{ top: 10, right: 10, left: -18, bottom: 0 }}>
@@ -126,7 +126,7 @@ export function WeeklyFuelTrendChart() {
   const isReady = useChartReady();
 
   return (
-    <div className="panel-muted mt-6 h-80 min-w-0 overflow-hidden rounded-[22px] p-4 sm:h-88">
+    <div className="panel-muted mt-6 h-80 min-w-0 overflow-hidden rounded-(--radius-chart) p-4 sm:h-88">
       {isReady ? (
         <ResponsiveContainer width="100%" height="100%" minWidth={0} minHeight={260}>
           <BarChart data={weeklyFuelTrendData} barGap={6} margin={{ top: 8, right: 10, left: -18, bottom: 0 }}>

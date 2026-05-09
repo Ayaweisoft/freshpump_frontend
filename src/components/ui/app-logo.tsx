@@ -32,7 +32,7 @@ export function AppLogo({
 
   return (
     <div className={className}>
-      <div className={`relative overflow-hidden rounded-[1.35rem] border border-border-subtle/50 bg-white/96 shadow-(--shadow-xs) ${sizing.frame}`}>
+      <div className={`relative overflow-hidden rounded-(--radius-logo) border border-border-subtle/50 bg-white/96 shadow-(--shadow-xs) ${sizing.frame}`}>
         <Image
           src="/fresh_pump_logo.png"
           alt="Fresh Pump"
