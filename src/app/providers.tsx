@@ -17,14 +17,17 @@ export function AppProviders({ children }: { children: React.ReactNode }) {
         defaultOptions: {
           queries: {
             staleTime: 30_000,
+            gcTime: 5 * 60_000,
             refetchOnWindowFocus: false,
+            refetchOnReconnect: false,
+            retry: 1,
           },
         },
       }),
   );
 
-  const language = useAppPreferencesStore((state) => state.language);
-  const theme = useAppPreferencesStore((state) => state.theme);
+  const language = useAppPreferencesStore((state) => state.settings.language);
+  const theme = useAppPreferencesStore((state) => state.settings.theme);
 
   useEffect(() => {
     void i18n.changeLanguage(language);

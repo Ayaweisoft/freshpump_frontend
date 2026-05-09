@@ -12,6 +12,8 @@ import {
   Gauge,
   Zap,
 } from "lucide-react";
+import { useAppPreferencesStore } from "@/stores/app-preferences-store";
+import { formatCurrencyValue, localizeDisplayValue } from "@/utils/locale-formatters";
 
 const pumpMetrics = [
   {
@@ -221,6 +223,9 @@ const getStatusLabel = (status: string) => {
 };
 
 export default function PumpsPage() {
+  const language = useAppPreferencesStore((state) => state.settings.language);
+  const currency = useAppPreferencesStore((state) => state.settings.currency);
+
   return (
     <motion.div
       className="grid gap-6"
@@ -251,7 +256,7 @@ export default function PumpsPage() {
               ].map(([label, value]) => (
                 <div key={label} className="panel-muted rounded-3xl p-4">
                   <p className="text-xs uppercase tracking-[0.18em] text-text-muted">{label}</p>
-                  <p className="mt-3 text-sm font-semibold text-foreground">{value}</p>
+                  <p className="mt-3 text-sm font-semibold text-foreground">{localizeDisplayValue(value, language, currency)}</p>
                 </div>
               ))}
             </div>
@@ -286,8 +291,8 @@ export default function PumpsPage() {
           >
             <MetricCard
               label={metric.label}
-              value={metric.value}
-              detail={metric.delta}
+              value={localizeDisplayValue(metric.value, language, currency)}
+              detail={localizeDisplayValue(metric.delta, language, currency)}
               tone={
                 metric.tone === "success"
                   ? "success"
@@ -351,7 +356,7 @@ export default function PumpsPage() {
                       <span>Flow Rate</span>
                     </div>
                     <span className="font-mono font-semibold text-foreground">
-                      {pump.flowRate} L/min
+                      {localizeDisplayValue(`${pump.flowRate} L/min`, language, currency)}
                     </span>
                   </div>
 
@@ -361,7 +366,7 @@ export default function PumpsPage() {
                       <span>Efficiency</span>
                     </div>
                     <span className="font-mono font-semibold text-foreground">
-                      {pump.efficiency}%
+                      {localizeDisplayValue(`${pump.efficiency}%`, language, currency)}
                     </span>
                   </div>
 
@@ -378,14 +383,14 @@ export default function PumpsPage() {
                   <div className="pt-2 border-t border-border-subtle flex items-center justify-between text-xs">
                     <span className="text-text-muted">Transactions</span>
                     <span className="font-mono font-semibold text-primary">
-                      {pump.transactions}
+                      {localizeDisplayValue(String(pump.transactions), language, currency)}
                     </span>
                   </div>
 
                   <div className="flex items-center justify-between text-xs">
                     <span className="text-text-muted">Revenue</span>
                     <span className="font-mono font-semibold text-success">
-                      ₦{pump.revenue.toLocaleString()}
+                      {formatCurrencyValue(pump.revenue, currency, language)}
                     </span>
                   </div>
                 </div>
@@ -505,7 +510,7 @@ export default function PumpsPage() {
                   <p className="text-xs uppercase tracking-[0.16em] text-text-muted">
                     {item.label}
                   </p>
-                  <p className="mt-1 text-sm font-semibold text-foreground">{item.value}</p>
+                  <p className="mt-1 text-sm font-semibold text-foreground">{localizeDisplayValue(item.value, language, currency)}</p>
                 </div>
               </div>
             ))}

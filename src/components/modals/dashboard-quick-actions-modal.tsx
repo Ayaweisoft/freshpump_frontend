@@ -46,10 +46,10 @@ export function DashboardQuickActionsModal({
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-[rgba(2,6,23,0.58)] px-4 backdrop-blur-md">
-      <div className="panel-shell w-full max-w-3xl rounded-4xl p-6 shadow-[0_24px_90px_rgba(2,6,23,0.3)]">
+      <div className="panel-shell w-full max-w-3xl rounded-[28px] p-6 shadow-[0_24px_90px_rgba(2,6,23,0.3)] sm:p-7">
         <div className="flex items-start justify-between gap-4">
           <div>
-            <p className="text-sm uppercase tracking-[0.18em] text-primary">Quick actions</p>
+            <p className="text-[0.72rem] uppercase tracking-[0.2em] text-primary">Quick actions</p>
             <h3 className="mt-3 font-heading text-3xl font-semibold text-foreground">
               Station command shortcuts
             </h3>
@@ -68,7 +68,7 @@ export function DashboardQuickActionsModal({
           </button>
         </div>
 
-        <div className="mt-6 grid gap-4 md:grid-cols-2">
+        <div className="mt-7 grid gap-4 md:grid-cols-2">
           {quickActions.map((action) => {
             const Icon = action.icon;
 
@@ -76,13 +76,13 @@ export function DashboardQuickActionsModal({
               <button
                 key={action.title}
                 type="button"
-                className="panel-card rounded-3xl p-5 text-left transition hover:-translate-y-1 hover:shadow-lg"
+                className="panel-card rounded-3xl border border-border-subtle/70 p-5 text-left transition hover:-translate-y-1 hover:border-border-subtle hover:shadow-lg"
               >
                 <div className="flex items-center justify-between gap-4">
-                  <div className="rounded-2xl bg-primary/12 p-3 text-primary">
+                  <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-primary/10 text-primary">
                     <Icon className="h-5 w-5" />
                   </div>
-                  <StatusPill tone={action.tone}>{action.tone}</StatusPill>
+                  <StatusPill tone={action.tone} size="sm">{action.tone}</StatusPill>
                 </div>
                 <p className="mt-5 text-base font-semibold text-foreground">{action.title}</p>
                 <p className="mt-2 text-sm leading-7 text-text-secondary">{action.description}</p>

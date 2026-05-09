@@ -82,9 +82,9 @@ export function DailySalesChart() {
   const isReady = useChartReady();
 
   return (
-    <div className="panel-muted mt-6 h-72 rounded-[22px] p-4 sm:h-80 sm:p-5">
+    <div className="panel-muted mt-6 h-72 min-w-0 overflow-hidden rounded-[22px] p-4 sm:h-80 sm:p-5">
       {isReady ? (
-        <ResponsiveContainer width="100%" height="100%">
+        <ResponsiveContainer width="100%" height="100%" minWidth={0} minHeight={240}>
           <AreaChart data={dailySalesData} margin={{ top: 10, right: 10, left: -18, bottom: 0 }}>
             <defs>
               <linearGradient id="salesGradient" x1="0" y1="0" x2="0" y2="1">
@@ -126,9 +126,9 @@ export function WeeklyFuelTrendChart() {
   const isReady = useChartReady();
 
   return (
-    <div className="panel-muted mt-6 h-80 rounded-[22px] p-4 sm:h-88">
+    <div className="panel-muted mt-6 h-80 min-w-0 overflow-hidden rounded-[22px] p-4 sm:h-88">
       {isReady ? (
-        <ResponsiveContainer width="100%" height="100%">
+        <ResponsiveContainer width="100%" height="100%" minWidth={0} minHeight={260}>
           <BarChart data={weeklyFuelTrendData} barGap={6} margin={{ top: 8, right: 10, left: -18, bottom: 0 }}>
             <CartesianGrid stroke="rgba(148, 163, 184, 0.1)" vertical={false} />
             <XAxis axisLine={false} tickLine={false} dataKey="day" tick={{ fill: "#64748B", fontSize: 12 }} />

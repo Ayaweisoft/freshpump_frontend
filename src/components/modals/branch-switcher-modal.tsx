@@ -2,11 +2,13 @@
 
 import { Building2, Check, MapPin, X } from "lucide-react";
 
+import { StatusPill } from "@/components/ui/enterprise-widgets";
+import { useAppPreferencesStore } from "@/stores/app-preferences-store";
+
 type BranchOption = {
   name: string;
   summary: string;
   region: string;
-  active?: boolean;
 };
 
 const branchOptions: BranchOption[] = [
@@ -14,7 +16,6 @@ const branchOptions: BranchOption[] = [
     name: "Victoria Island HQ",
     summary: "12 pumps, 6 tanks, 4 active shifts",
     region: "Island region",
-    active: true,
   },
   {
     name: "Lekki Phase 1",
@@ -42,16 +43,28 @@ export function BranchSwitcherModal({
   isOpen,
   onClose,
 }: BranchSwitcherModalProps) {
+  const organization = useAppPreferencesStore((state) => state.organization);
+  const setOrganization = useAppPreferencesStore((state) => state.setOrganization);
+
   if (!isOpen) {
     return null;
   }
 
+  const handleSelectBranch = (branch: BranchOption) => {
+    setOrganization({
+      branchName: branch.name,
+      branchSummary: branch.summary,
+      welcomeMessage: `Welcome back, ${organization.userName}! ${branch.name} is now your active command surface.`,
+    });
+    onClose();
+  };
+
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-[rgba(2,6,23,0.58)] px-4 backdrop-blur-md">
-      <div className="panel-shell w-full max-w-3xl rounded-4xl p-6 shadow-[0_24px_90px_rgba(2,6,23,0.3)]">
+      <div className="panel-shell w-full max-w-3xl rounded-[28px] p-6 shadow-[0_24px_90px_rgba(2,6,23,0.3)] sm:p-7">
         <div className="flex items-start justify-between gap-4">
           <div>
-            <p className="text-sm uppercase tracking-[0.18em] text-primary">Branch switcher</p>
+            <p className="text-[0.72rem] uppercase tracking-[0.2em] text-primary">Branch switcher</p>
             <h3 className="mt-3 font-heading text-3xl font-semibold text-foreground">
               Route into another operating branch
             </h3>
@@ -70,22 +83,29 @@ export function BranchSwitcherModal({
           </button>
         </div>
 
-        <div className="mt-6 grid gap-4 md:grid-cols-2">
-          {branchOptions.map((branch) => (
+        <div className="mt-7 grid gap-4 md:grid-cols-2">
+          {branchOptions.map((branch) => {
+            const isActive = organization.branchName === branch.name;
+
+            return (
             <button
               key={branch.name}
               type="button"
-              className="panel-card rounded-3xl p-5 text-left transition hover:-translate-y-1 hover:shadow-lg"
+              onClick={() => handleSelectBranch(branch)}
+              className={`panel-card rounded-3xl border p-5 text-left transition hover:-translate-y-1 hover:shadow-lg ${
+                isActive
+                  ? "border-success/25 bg-success/8"
+                  : "border-border-subtle/70 hover:border-border-subtle"
+              }`}
             >
               <div className="flex items-start justify-between gap-4">
-                <div className="rounded-2xl bg-primary/12 p-3 text-primary">
+                <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-primary/10 text-primary">
                   <Building2 className="h-5 w-5" />
                 </div>
-                {branch.active ? (
-                  <span className="inline-flex items-center gap-1 rounded-full border border-success/20 bg-success/10 px-3 py-1 text-xs font-semibold text-success">
-                    <Check className="h-3 w-3" />
+                {isActive ? (
+                  <StatusPill tone="success" size="sm" icon={<Check className="h-3 w-3" />}>
                     Current
-                  </span>
+                  </StatusPill>
                 ) : null}
               </div>
 
@@ -96,7 +116,7 @@ export function BranchSwitcherModal({
                 <span>{branch.region}</span>
               </div>
             </button>
-          ))}
+          );})}
         </div>
       </div>
     </div>

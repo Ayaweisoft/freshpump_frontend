@@ -1,25 +1,24 @@
-import { ShieldCheck } from "lucide-react";
-
 type EnterpriseGuardCardProps = {
   title?: string;
   description?: string;
 };
 
 export function EnterpriseGuardCard({
-  title = "Enterprise Guard",
-  description = "All stations synchronized",
+  title = "Current Plan",
+  description = "Professional",
 }: EnterpriseGuardCardProps) {
   return (
-    <div className="hero-accent-card rounded-3xl p-4">
-      <div className="flex items-center gap-3">
-        <div className="rounded-2xl bg-primary/12 p-2.5 text-primary">
-          <ShieldCheck className="h-4.5 w-4.5" />
-        </div>
-        <div>
-          <p className="text-sm font-semibold leading-5 text-foreground">{title}</p>
-          <p className="text-xs leading-5 text-text-secondary">{description}</p>
-        </div>
-      </div>
+    <div className="panel-card rounded-3xl border border-border-subtle/80 p-4.5 shadow-(--shadow-xs)">
+      <p className="text-sm leading-6 text-text-secondary">{title}</p>
+      <p className="mt-2 text-[1.35rem] font-semibold text-success">{description}</p>
+      <p className="mt-1 text-sm leading-6 text-text-secondary">Access to advanced analytics and branch controls.</p>
+      <p className="mt-2 text-xs uppercase tracking-[0.16em] text-text-muted">Renews Jun 25, 2025</p>
+      <button
+        type="button"
+        className="mt-5 w-full rounded-2xl border border-success/25 bg-success/8 px-4 py-3 text-sm font-semibold text-success transition hover:bg-success/12"
+      >
+        Manage Billing
+      </button>
     </div>
   );
 }

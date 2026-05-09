@@ -14,11 +14,11 @@ const toneClasses: Record<Tone, string> = {
 };
 
 const toneBgClasses: Record<Tone, string> = {
-  primary: "bg-primary/10",
-  success: "bg-success/10",
-  warning: "bg-warning/10",
-  danger: "bg-danger/10",
-  neutral: "bg-card/70",
+  primary: "surface-icon surface-icon-primary",
+  success: "surface-icon surface-icon-success",
+  warning: "surface-icon surface-icon-warning",
+  danger: "surface-icon surface-icon-danger",
+  neutral: "surface-icon surface-icon-neutral",
 };
 
 const toneTextClasses: Record<Tone, string> = {
@@ -28,6 +28,27 @@ const toneTextClasses: Record<Tone, string> = {
   danger: "text-danger",
   neutral: "text-text-secondary",
 };
+
+function parseInlineTrend(detail?: string) {
+  if (!detail) {
+    return null;
+  }
+
+  const match = detail.match(/^([↑↓])\s*([^ ]+)\s*(.*)$/);
+
+  if (!match) {
+    return null;
+  }
+
+  const [, direction, value, context] = match;
+
+  return {
+    direction,
+    value,
+    context: context.trim(),
+    tone: direction === "↓" ? "danger" : "success",
+  } as const;
+}
 
 interface StatusPillProps {
   children: ReactNode;
@@ -43,18 +64,116 @@ export function StatusPill({
   icon,
 }: StatusPillProps) {
   const sizeClasses = {
-    sm: "px-2 py-0.5 text-xs",
+    sm: "px-2.5 py-1 text-[0.68rem]",
     md: "px-3 py-1 text-xs",
     lg: "px-4 py-2 text-sm",
   };
 
   return (
     <span
-      className={`inline-flex items-center gap-1.5 rounded-full border font-semibold uppercase tracking-[0.14em] transition ${sizeClasses[size]} ${toneClasses[tone]}`}
+      className={`inline-flex items-center gap-1.5 rounded-full border font-semibold uppercase tracking-[0.16em] shadow-[inset_0_1px_0_rgba(255,255,255,0.2)] transition ${sizeClasses[size]} ${toneClasses[tone]}`}
     >
       {icon}
       {children}
     </span>
+  );
+}
+
+type MetricDetailInlineProps = {
+  detail?: string;
+  tone?: Tone;
+  trend?: "up" | "down" | "neutral";
+};
+
+function resolveDetailTone(detailTone: Tone, rawValue: string) {
+  if (rawValue.startsWith("-")) {
+    return "danger" as const;
+  }
+
+  if (rawValue.startsWith("+") || rawValue.startsWith("↑")) {
+    return "success" as const;
+  }
+
+  return detailTone;
+}
+
+function parseMetricDetail(detail?: string) {
+  if (!detail) {
+    return null;
+  }
+
+  const trendMatch = detail.match(/^([↑↓])\s*([^ ]+)\s*(.*)$/);
+
+  if (trendMatch) {
+    const [, direction, value, context] = trendMatch;
+
+    return {
+      kind: "trend",
+      direction,
+      value,
+      context: context.trim(),
+    } as const;
+  }
+
+  const splitMatch = detail.match(/^([+-]?\d[^ ]*|\d+%|\d+\.\d+%|\d+\.\d+x|\d+x)\s+(.+)$/i);
+
+  if (splitMatch) {
+    const [, value, context] = splitMatch;
+
+    return {
+      kind: "value",
+      value,
+      context: context.trim(),
+    } as const;
+  }
+
+  return {
+    kind: "text",
+    context: detail,
+  } as const;
+}
+
+export function MetricDetailInline({
+  detail,
+  tone = "neutral",
+  trend,
+}: MetricDetailInlineProps) {
+  const parsed = parseMetricDetail(detail);
+
+  if (!parsed) {
+    return null;
+  }
+
+  if (parsed.kind === "text") {
+    return <p className="text-sm leading-6 text-text-secondary">{parsed.context}</p>;
+  }
+
+  const detailTone =
+    parsed.kind === "trend"
+      ? parsed.direction === "↓"
+        ? "danger"
+        : "success"
+      : resolveDetailTone(tone, parsed.value);
+
+  const chipClasses =
+    detailTone === "danger"
+      ? "border-danger/20 bg-danger/10 text-danger"
+      : detailTone === "warning"
+        ? "border-warning/20 bg-warning/10 text-warning"
+        : detailTone === "primary"
+          ? "border-primary/20 bg-primary/10 text-primary"
+          : "border-success/20 bg-success/10 text-success";
+
+  return (
+    <div className="flex flex-wrap items-center gap-2">
+      <span className={`inline-flex items-center gap-1 rounded-full border px-2.5 py-1 text-[0.72rem] font-semibold tracking-[0.02em] ${chipClasses}`}>
+        {parsed.kind === "trend" ? <span>{parsed.direction}</span> : null}
+        {trend === "up" && parsed.kind !== "trend" ? <ChevronUp className="h-3.5 w-3.5" /> : null}
+        {trend === "down" && parsed.kind !== "trend" ? <ChevronDown className="h-3.5 w-3.5" /> : null}
+        <span>{parsed.value}</span>
+      </span>
+      {parsed.context ? <span className="text-sm leading-6 text-text-secondary">{parsed.context}</span> : null}
+    </div>
   );
 }
 
@@ -83,33 +202,26 @@ export function MetricCard({
 }: MetricCardProps) {
   const Component = href ? "a" : "article";
   const props = href ? { href } : {};
-
   return (
     <Component
-      className="panel-card cursor-pointer rounded-3xl p-4.5 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-md"
+      className="panel-card group cursor-pointer rounded-[28px] p-5 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-md"
       {...props}
     >
       <div className="flex items-start justify-between gap-4">
         <div className="flex-1">
-          <p className="text-sm font-medium text-text-secondary">{label}</p>
+          <p className="prose-caption">{label}</p>
         </div>
-        {icon && <div className={`${toneBgClasses[tone]} rounded-[14px] p-2.5 text-lg`}>{icon}</div>}
+        {icon && <div className={`${toneBgClasses[tone]} h-11 w-11 p-0 text-lg transition-transform duration-300 group-hover:scale-105`}>{icon}</div>}
       </div>
 
       <div className="mt-3.5 flex items-end justify-between gap-2">
         <div>
-          <p className="font-mono text-[1.7rem] font-semibold leading-none text-foreground">{value}</p>
-          {detail && (
-            <div className="mt-2.5 flex items-center gap-1">
-              {trend === "up" && (
-                <ChevronUp className={`h-4 w-4 ${toneTextClasses[tone]}`} />
-              )}
-              {trend === "down" && (
-                <ChevronDown className={`h-4 w-4 ${toneTextClasses[tone]}`} />
-              )}
-              <p className="text-sm leading-7 text-text-secondary">{detail}</p>
+          <p className="font-mono text-[1.85rem] font-semibold leading-none tracking-[-0.04em] text-foreground">{value}</p>
+          {detail ? (
+            <div className="mt-2.5">
+              <MetricDetailInline detail={detail} tone={tone} trend={trend} />
             </div>
-          )}
+          ) : null}
         </div>
       </div>
 
@@ -148,15 +260,15 @@ export function SectionCard({
   action,
 }: SectionCardProps) {
   return (
-    <article className="panel-shell rounded-[26px] p-5 transition-all duration-300 sm:p-6">
+      <article className="panel-shell min-w-0 rounded-[28px] border border-border-subtle/70 p-5 transition-all duration-300 sm:p-6">
       <div className="flex flex-col items-start justify-between gap-3 sm:flex-row sm:items-center">
         <div className="flex-1">
-          <p className="text-xs uppercase tracking-[0.16em] text-text-muted">{eyebrow}</p>
-          <h2 className="mt-2 font-heading text-xl font-semibold text-foreground sm:text-2xl">
+          <p className="prose-eyebrow">{eyebrow}</p>
+          <h2 className="mt-2 font-heading text-[1.35rem] font-semibold tracking-[-0.02em] text-foreground sm:text-[1.55rem]">
             {title}
           </h2>
           {description && (
-            <p className="mt-1 max-w-2xl text-sm leading-6 text-text-secondary">{description}</p>
+            <p className="mt-1.5 max-w-2xl text-sm leading-7 text-text-secondary">{description}</p>
           )}
         </div>
         <div className="flex items-center gap-3">
@@ -175,7 +287,7 @@ export function SectionCard({
           )}
         </div>
       </div>
-      <div className="mt-5">{children}</div>
+      <div className="mt-5 min-w-0">{children}</div>
     </article>
   );
 }
@@ -263,7 +375,7 @@ export function AlertBox({
     >
       <div className="flex gap-3 flex-1">
         {icon && (
-          <div className={`${toneBgClasses[tone]} rounded-lg p-2.5 text-lg mt-0.5`}>
+          <div className={`${toneBgClasses[tone]} mt-0.5 h-11 w-11 rounded-2xl p-0 text-lg`}>
             {icon}
           </div>
         )}
@@ -316,7 +428,7 @@ export function StatGroup({ stats, layout = "vertical" }: StatGroupProps) {
           <p className="text-xs uppercase tracking-[0.16em] text-text-muted">
             {stat.label}
           </p>
-          <p className={`mt-2 font-mono text-xl font-semibold ${toneTextClasses[stat.tone || "neutral"]}`}>
+          <p className={`mt-2 font-mono text-xl font-semibold tracking-[-0.03em] ${toneTextClasses[stat.tone || "neutral"]}`}>
             {stat.value}
           </p>
         </div>

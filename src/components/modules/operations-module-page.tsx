@@ -8,6 +8,8 @@ import {
   StatusPill,
 } from "@/components/ui/enterprise-widgets";
 import { DataTable } from "@/components/tables/data-table";
+import { useAppPreferencesStore } from "@/stores/app-preferences-store";
+import { localizeDisplayValue } from "@/utils/locale-formatters";
 
 type Tone = "primary" | "success" | "warning" | "danger" | "neutral";
 
@@ -88,6 +90,9 @@ const toneTextClasses: Record<Tone, string> = {
 };
 
 export function OperationsModulePage({ config }: { config: OperationsModuleConfig }) {
+  const language = useAppPreferencesStore((state) => state.settings.language);
+  const currency = useAppPreferencesStore((state) => state.settings.currency);
+
   return (
     <motion.div
       className="grid gap-6"
@@ -113,7 +118,7 @@ export function OperationsModulePage({ config }: { config: OperationsModuleConfi
               {config.hero.summaries.map((item) => (
                 <div key={item.label} className="panel-muted rounded-3xl p-4">
                   <p className="text-xs uppercase tracking-[0.18em] text-text-muted">{item.label}</p>
-                  <p className="mt-3 text-sm font-semibold text-foreground">{item.value}</p>
+                  <p className="mt-3 text-sm font-semibold text-foreground">{localizeDisplayValue(item.value, language, currency)}</p>
                 </div>
               ))}
             </div>
@@ -125,7 +130,7 @@ export function OperationsModulePage({ config }: { config: OperationsModuleConfi
               {config.hero.asideItems.map((item) => (
                 <div key={item.label} className="panel-muted rounded-3xl p-4">
                   <p className="text-xs uppercase tracking-[0.16em] text-text-muted">{item.label}</p>
-                  <p className="mt-2 font-mono text-lg text-foreground">{item.value}</p>
+                  <p className="mt-2 font-mono text-lg text-foreground">{localizeDisplayValue(item.value, language, currency)}</p>
                 </div>
               ))}
             </div>
@@ -138,8 +143,8 @@ export function OperationsModulePage({ config }: { config: OperationsModuleConfi
           <MetricCard
             key={metric.label}
             label={metric.label}
-            value={metric.value}
-            detail={metric.detail}
+            value={localizeDisplayValue(metric.value, language, currency)}
+            detail={localizeDisplayValue(metric.detail, language, currency)}
             tone={metric.tone}
           />
         ))}
@@ -160,12 +165,12 @@ export function OperationsModulePage({ config }: { config: OperationsModuleConfi
               lead: (
                 <>
                   <p className="font-medium text-foreground">{row.title}</p>
-                  {row.subtitle ? <p className="mt-1 text-xs text-text-muted">{row.subtitle}</p> : null}
+                  {row.subtitle ? <p className="mt-1 text-xs text-text-muted">{localizeDisplayValue(row.subtitle, language, currency)}</p> : null}
                 </>
               ),
               cells: row.cells.map((cell, index) => (
                 <span key={`${row.id}-${index}`} className={toneTextClasses[cell.tone ?? "neutral"]}>
-                  {cell.value}
+                  {localizeDisplayValue(cell.value, language, currency)}
                 </span>
               )),
             }))}
@@ -184,7 +189,7 @@ export function OperationsModulePage({ config }: { config: OperationsModuleConfi
                 <div className="flex items-start justify-between gap-4">
                   <div>
                     <p className="text-sm font-semibold text-foreground">{item.title}</p>
-                    <p className="mt-2 text-sm leading-7 text-text-secondary">{item.description}</p>
+                    <p className="mt-2 text-sm leading-7 text-text-secondary">{localizeDisplayValue(item.description, language, currency)}</p>
                   </div>
                   {item.badge ? <StatusPill tone={item.tone ?? "neutral"}>{item.badge}</StatusPill> : null}
                 </div>
@@ -205,7 +210,7 @@ export function OperationsModulePage({ config }: { config: OperationsModuleConfi
             {config.tertiary.items.map((item) => (
               <div key={item.label} className="panel-muted rounded-3xl p-4">
                 <p className="text-xs uppercase tracking-[0.16em] text-text-muted">{item.label}</p>
-                <p className="mt-3 font-mono text-xl text-foreground">{item.value}</p>
+                <p className="mt-3 font-mono text-xl text-foreground">{localizeDisplayValue(item.value, language, currency)}</p>
               </div>
             ))}
           </div>

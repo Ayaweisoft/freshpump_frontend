@@ -169,7 +169,7 @@ export default function LoginPage() {
               <div className="flex flex-col gap-3 sm:flex-row">
                 <button
                   type="button"
-                  className="flex-1 rounded-2xl bg-primary px-5 py-4 text-sm font-semibold text-white transition hover:bg-primary-strong"
+                  className="flex-1 rounded-2xl bg-primary px-5 py-4 text-sm font-semibold text-white transition hover:bg-success hover:shadow-(--shadow-glow-success)"
                 >
                   Sign In With Demo Access
                 </button>

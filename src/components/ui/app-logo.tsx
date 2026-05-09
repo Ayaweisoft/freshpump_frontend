@@ -9,8 +9,8 @@ type AppLogoProps = {
 
 const sizeClasses = {
   sm: {
-    frame: "h-12 w-[9.5rem]",
-    subtitle: "text-[0.7rem]",
+    frame: "h-11 w-[8.75rem]",
+    subtitle: "text-[0.62rem]",
   },
   md: {
     frame: "h-16 w-[12.5rem]",
@@ -32,18 +32,18 @@ export function AppLogo({
 
   return (
     <div className={className}>
-      <div className={`relative overflow-hidden rounded-2xl bg-white/96 ${sizing.frame}`}>
+      <div className={`relative overflow-hidden rounded-[1.35rem] border border-border-subtle/50 bg-white/96 shadow-(--shadow-xs) ${sizing.frame}`}>
         <Image
           src="/fresh_pump_logo.png"
           alt="Fresh Pump"
           fill
-          className="object-contain p-2"
+          className="object-contain p-1.5"
           priority
           sizes="(max-width: 768px) 180px, 240px"
         />
       </div>
       {showSubtitle ? (
-        <p className={`mt-2 pl-1 font-medium tracking-[0.18em] text-text-secondary uppercase ${sizing.subtitle}`}>
+        <p className={`mt-2 pl-1 font-medium tracking-[0.22em] text-text-secondary uppercase ${sizing.subtitle}`}>
           {subtitle}
         </p>
       ) : null}
